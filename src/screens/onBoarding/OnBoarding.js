@@ -1,8 +1,9 @@
 import React from 'react'
 import Onboarding from 'react-native-onboarding-swiper';
 import { Button, Image, TouchableOpacity, View, Text } from 'react-native';
+import SignIn from '../SignIn/SignIn';
 
-const OnBoarding = () => {
+const OnBoarding = ({navigation}) => {
 
   const Done = ({ ...props }) => (
      <View style={{margin:15}}>
@@ -15,10 +16,17 @@ const OnBoarding = () => {
     
   );
 
+  const resetStack = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'SignIn' }]
+  })
+  }
+
   return (
       <Onboarding
-        onSkip={() => {}}
-        onDone={() => {}}
+        onSkip={resetStack}
+        onDone={resetStack}
         DoneButtonComponent={Done}
         pages={[
           {
