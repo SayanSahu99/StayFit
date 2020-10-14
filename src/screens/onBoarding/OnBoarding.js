@@ -1,7 +1,6 @@
 import React from 'react'
 import Onboarding from 'react-native-onboarding-swiper';
 import { Button, Image, TouchableOpacity, View, Text } from 'react-native';
-import SignIn from '../SignIn/SignIn';
 
 const OnBoarding = ({navigation}) => {
 
@@ -19,7 +18,7 @@ const OnBoarding = ({navigation}) => {
   const resetStack = () => {
     navigation.reset({
       index: 0,
-      routes: [{ name: 'SignIn' }]
+      routes: [{ name: 'Welcome' }]
   })
   }
 
