@@ -1,13 +1,50 @@
 
 import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
+import styles from "./style";
+import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';
+import { Button, SocialIcon } from 'react-native-elements';
 
 export default function Register({ navigation }) {
   // TODO: add firebase login function later
 
   return (
-    <View style={{flex:1 ,justifyContent: 'center', alignItems:'center'}}>
-      <Text>Register</Text>
-    </View>
+    <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.loginScreenContainer}>
+          <View style={styles.loginFormView}>
+          <Text style={styles.logoText}>Stay Fit</Text>
+            <TextInput placeholder="Email" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+            <TextInput placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true}/>
+            <Button
+              buttonStyle={styles.loginButton}
+              onPress={() => {}}
+              title="SIGN UP"
+            />
+            <View style={styles.socialView}>
+              <View style={styles.socialTextView}><Text>Or connect with</Text></View>
+              
+              <View style={styles.socialButtonView}>
+                <SocialIcon
+                  type='facebook'
+                  buttonStyle={styles.fbLoginButton}
+                  onPress={() =>{}}
+                />
+                <SocialIcon
+                  type='google'
+                  buttonStyle={styles.fbLoginButton}
+                  onPress={() =>{}}
+                />
+                <SocialIcon
+                  type='twitter'
+                  buttonStyle={styles.fbLoginButton}
+                  onPress={() =>{}}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
   )
 }

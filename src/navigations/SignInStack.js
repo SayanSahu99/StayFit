@@ -27,9 +27,8 @@ export default function SignInStack() {
         component={Register} 
         options={{
           title: 'Register',
-          headerLeft: null,
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#1E88E5',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -42,7 +41,6 @@ export default function SignInStack() {
         component={SignIn} 
         options={{
           title: 'Sign In',
-          headerLeft: null,
           headerStyle: {
             backgroundColor: '#f4511e',
           },
