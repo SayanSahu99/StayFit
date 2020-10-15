@@ -1,14 +1,18 @@
 
 import React, { useEffect } from 'react'
 import styles from "./style";
-import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';
+import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Platform, KeyboardAvoidingView } from 'react-native';
 import { Button, SocialIcon } from 'react-native-elements';
 
 export default function Register({ navigation }) {
   // TODO: add firebase login function later
 
   return (
-    <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
+      style={styles.containerView}
+    >
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.loginScreenContainer}>
@@ -45,6 +49,6 @@ export default function Register({ navigation }) {
           </View>
         </View>
       </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+    </KeyboardAvoidingView>
   )
 }
