@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "com.mypackage.stayFit",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
     }
   }
 }

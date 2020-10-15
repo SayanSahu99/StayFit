@@ -4,11 +4,15 @@ import SignIn from '../screens/SignIn/SignIn';
 import OnBoarding from '../screens/onBoarding/OnBoarding';
 import Welcome from '../screens/Welcome/Welcome';
 import Register from '../screens/Register/Register';
+import { useTheme } from '@react-navigation/native';
 
 
 const Stack = createStackNavigator()
 
 export default function SignInStack() {
+
+  const { colors } = useTheme();
+
   return (
 
     <Stack.Navigator>
@@ -28,8 +32,9 @@ export default function SignInStack() {
         options={{
           title: 'Register',
           headerStyle: {
-            backgroundColor: '#1E88E5',
+            backgroundColor: colors.primary,
           },
+          
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -42,7 +47,7 @@ export default function SignInStack() {
         options={{
           title: 'Sign In',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: colors.primary,
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
