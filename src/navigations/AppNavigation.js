@@ -1,24 +1,20 @@
+import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import OnBoarding from '../screens/onBoarding/OnBoarding';
+import AuthNavigator from './AuthNavigator';
 
 const Stack = createStackNavigator();
 
-function MainStack() {
-   
-    const [userToken, setUserToken] = useState(null)
+export default function AppNavigation() {
 
     return (
         <Stack.Navigator>
-            <Stack.Screen name="OnBoarding" component={OnBoarding} />
-            {userToken == null ? (
-                // No token found, user isn't signed in
-                <>
-                <Stack.Screen name="SignIn" component={} />
-                </>
-            ) : (
-                // User is signed in
-                <Stack.Screen name="Home" component={} />
-                )}
+            <Stack.Screen 
+                options={{headerShown: false}}
+                name="OnBoarding" 
+                component={OnBoarding} 
+            />
+            <Stack.Screen name="AuthNavigator" options={{headerShown: false}} component={AuthNavigator} />
         </Stack.Navigator>
     );
 }

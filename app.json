@@ -23,8 +23,7 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.mypackage.stayFit",
-      "googleServicesFile": "./google-services.json"
+      "package": "com.mypackage.stayFit"
     }
   }
 }

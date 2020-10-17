@@ -18,7 +18,7 @@ const OnBoarding = ({navigation}) => {
   const resetStack = () => {
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Welcome' }]
+      routes: [{ name: 'AuthNavigator' }]
   })
   }
 

@@ -1,13 +1,24 @@
-import React,  {useState } from 'react'
+import React,  { useState, useEffect } from 'react'
 import SignInStack from './SignInStack'
 import SignOutStack from './SignOutStack'
-import OnBoarding from '../screens/onBoarding/OnBoarding';
+import firebase from 'firebase';
 
 export default function AuthNavigator() {
-  
-    const [userToken, setUserToken] = useState(null);
 
-    return userToken == null ? (
+  const [appUser, setUser] = useState(null);
+
+  useEffect(() => {
+    
+    firebase.auth().onAuthStateChanged(async (user) => {
+      setUser(user);
+    });
+
+    return () => {
+      setUser(null)
+    }
+  }, []);
+  
+    return appUser == null ? (
         <SignInStack />
     ) : (
       <SignOutStack />

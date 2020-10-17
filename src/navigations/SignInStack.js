@@ -5,6 +5,8 @@ import OnBoarding from '../screens/onBoarding/OnBoarding';
 import Welcome from '../screens/Welcome/Welcome';
 import Register from '../screens/Register/Register';
 import { useTheme } from '@react-navigation/native';
+import Home from '../screens/Home/Home';
+import SignOutStack from './SignOutStack';
 
 
 const Stack = createStackNavigator()
@@ -16,11 +18,6 @@ export default function SignInStack() {
   return (
 
     <Stack.Navigator>
-      <Stack.Screen 
-        options={{headerShown: false}}
-        name="OnBoarding" 
-        component={OnBoarding} 
-      />
       <Stack.Screen 
         options={{headerShown: false}}
         name="Welcome" 
@@ -55,6 +52,11 @@ export default function SignInStack() {
           },
         }}
       />
+      <Stack.Screen 
+        name="SignOut" 
+        options={{headerShown: false}}
+        component={SignOutStack} 
+       />
     </Stack.Navigator>
   
   )
