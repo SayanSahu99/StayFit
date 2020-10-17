@@ -30,19 +30,19 @@ const OnBoarding = ({navigation}) => {
         pages={[
           {
             backgroundColor: '#757ce8',
-            image: <Image source={require('./../../../assets/onBoard1.png')} />,
+            image: <Image source={require('./../../../assets/fitness_app.png')} />,
             title: 'Welcome to Stay Fit',
             subtitle: 'Your complete guide to nutrition, health and fitness',
           },
           {
             backgroundColor: '#ff7961',
-            image: <Image source={require('./../../../assets/onBoard2.png')} />,
+            image: <Image source={require('./../../../assets/sandwich.png')} />,
             title: 'Diet',
             subtitle: 'Easily Track your diet, water and exercise.',
           },
           {
             backgroundColor: '#6fbf73',
-            image: <Image source={require('./../../../assets/onBoard3.png')} />,
+            image: <Image source={require('./../../../assets/graphic_chart.png')} />,
             title: 'Goals',
             subtitle: 'Keep your goals in view and track your progress',
           }
