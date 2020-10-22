@@ -53,7 +53,7 @@ socialView: {
 socialTextView:{
   marginBottom:10,
   justifyContent:'center',
-  alignItems:'center'
+  alignItems:'center',
 },
 socialButtonView:{
   flexDirection:'row',

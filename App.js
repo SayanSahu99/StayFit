@@ -1,7 +1,5 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import AppNavigation from './src/navigations/AppNavigation';
 import firebaseConfig from './src/firebase/config';
@@ -9,6 +7,8 @@ import firebase from 'firebase';
 import '@firebase/auth';
 import '@firebase/firestore';
 import { LogBox } from 'react-native';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './src/Redux/configureStore';
 
 const MyTheme = {
   colors: {
@@ -19,6 +19,7 @@ const MyTheme = {
 
 export default function App() {
 
+  const store = ConfigureStore();
 
   if (!firebase.apps.length) {
     try {
@@ -31,9 +32,11 @@ export default function App() {
 
   LogBox.ignoreLogs(['Setting a timer']);
   return (
-    <NavigationContainer theme={MyTheme}>
-      <AppNavigation />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer theme={MyTheme}>
+        <AppNavigation />
+      </NavigationContainer>
+    </Provider>
   );
 }
 

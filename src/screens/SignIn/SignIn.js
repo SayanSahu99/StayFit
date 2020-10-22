@@ -26,7 +26,7 @@ export default function Register({ navigation }) {
               title="LOGIN"
             />
             <View style={styles.socialView}>
-              <View style={styles.socialTextView}><Text>Or login with</Text></View>
+              <View style={styles.socialTextView}><Text style={{fontSize: 15}}>Or login with</Text></View>
               
               <View style={styles.socialButtonView}>
                 <SocialIcon
