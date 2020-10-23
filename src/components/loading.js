@@ -5,6 +5,7 @@ import {
   Modal,
   ActivityIndicator
 } from 'react-native';
+import {Text} from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 
 const Loader = props => {
@@ -21,33 +22,47 @@ const Loader = props => {
       animationType={'none'}
       visible={loading}
       onRequestClose={() => {console.log('close modal')}}>
-      <View style={styles.modalBackground}>
-        <View style={styles.activityIndicatorWrapper}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
           <ActivityIndicator
             animating={loading}
             size="large" animating={true} 
             color={colors.primary} />
+          <Text style={styles.modalText}>Please Wait...</Text>
         </View>
+        
       </View>
+      
     </Modal>
   )
 }
 
 const styles = StyleSheet.create({
-  modalBackground: {
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    backgroundColor: '#00000040'
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    flexDirection:'row'
   },
-  activityIndicatorWrapper: {
-    backgroundColor: '#FFFFFF',
-    height: 100,
-    width: 100,
-    borderRadius: 10,
-    display: 'flex',
-    alignItems: 'center',
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalText: {
+    marginLeft: 15,
+    textAlign: "center",
     justifyContent: 'space-around'
   }
 });
