@@ -1,5 +1,4 @@
-import React,  { useState, useEffect } from 'react'
-import firebase from 'firebase';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SignInStack from './SignInStack'
 import SignOutStack from './SignOutStack'

@@ -21,6 +21,25 @@ export const loginError = (message) => {
     }
 }
 
+export const requestLogout = () => {
+  return {
+      type: ActionTypes.LOGOUT_REQUEST,
+  }
+}
+
+export const receiveLogout = () => {
+  return {
+      type: ActionTypes.LOGOUT_SUCCESS,
+  }
+}
+
+export const logoutError = (message) => {
+  return {
+      type: ActionTypes.LOGOUT_FAILURE,
+      message
+  }
+}
+
 export const loginUser = () => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin());
