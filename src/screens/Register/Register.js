@@ -1,21 +1,18 @@
 
 import React, { useEffect } from 'react'
 import styles from "./style";
-import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Platform, KeyboardAvoidingView } from 'react-native';
+import {
+  Keyboard,
+  Text, 
+  View, 
+  TextInput, 
+  TouchableWithoutFeedback, 
+  Platform, 
+  KeyboardAvoidingView } from 'react-native';
 import { Button, SocialIcon } from 'react-native-elements';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {loginUser} from '../../Redux/ActionCreaters/auth'
 import Loader from '../../components/loading';
-
-const mapStateToProps = state => {
-  return {
-    auth: state.auth
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  loginUser: () => dispatch(loginUser())
-})
 
 
 function Register(props) {
@@ -23,17 +20,20 @@ function Register(props) {
   
   useEffect(() => {
     return () => {
-      if(props.auth.isAuthenticated) {
+      if(isAuthenticated) {
         props.navigation.push('SignOut');
       }
     }
   }, []);
 
+  const isLoading = useSelector(state => state.auth.isLoading);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.containerView}>
       
-      <Loader loading={props.auth.isLoading} />
+      <Loader loading={isLoading} />
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
@@ -63,7 +63,7 @@ function Register(props) {
                   <SocialIcon
                     type='google'
                     buttonStyle={styles.fbLoginButton}
-                    onPress={() => {props.loginUser();}}
+                    onPress={() => dispatch(loginUser())}
                   />
                   <SocialIcon
                     type='twitter'
@@ -80,4 +80,4 @@ function Register(props) {
     );
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default Register;
