@@ -8,7 +8,9 @@ import '@firebase/auth';
 import '@firebase/firestore';
 import { LogBox } from 'react-native';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/es/integration/react'
 import { ConfigureStore } from './src/Redux/configureStore';
+import Loader from './src/components/loading';
 
 const MyTheme = {
   colors: {
@@ -19,7 +21,7 @@ const MyTheme = {
 
 export default function App() {
 
-  const store = ConfigureStore();
+  const { persistor, store } = ConfigureStore();
 
   if (!firebase.apps.length) {
     try {
@@ -33,9 +35,13 @@ export default function App() {
   LogBox.ignoreLogs(['Setting a timer']);
   return (
     <Provider store={store}>
-      <NavigationContainer theme={MyTheme}>
-        <AppNavigation />
-      </NavigationContainer>
+      <PersistGate 
+        loading={<Loader />}
+        persistor={persistor}>
+        <NavigationContainer theme={MyTheme}>
+          <AppNavigation />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }
