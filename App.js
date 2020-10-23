@@ -10,7 +10,7 @@ import { LogBox } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react'
 import { ConfigureStore } from './src/Redux/configureStore';
-import Loader from './src/components/loading';
+import Spinner from './src/components/activityIndicator';
 
 const MyTheme = {
   colors: {
@@ -36,7 +36,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate 
-        loading={<Loader />}
+        loading={<Spinner />}
         persistor={persistor}>
         <NavigationContainer theme={MyTheme}>
           <AppNavigation />
