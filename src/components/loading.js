@@ -22,16 +22,16 @@ const Loader = props => {
       animationType={'none'}
       visible={loading}
       onRequestClose={() => {console.log('close modal')}}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <ActivityIndicator
-            animating={loading}
-            size="large" animating={true} 
-            color={colors.primary} />
-          <Text style={styles.modalText}>Please Wait...</Text>
-        </View>
-        
-      </View>
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                <ActivityIndicator
+                    animating={loading}
+                    size="large" animating={true} 
+                    color={colors.primary} />
+                <Text style={styles.modalText}>Please Wait...</Text>
+                </View>
+            </View>
+      
       
     </Modal>
   )
@@ -40,7 +40,7 @@ const Loader = props => {
 const styles = StyleSheet.create({
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -58,13 +58,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: '#00000040',
     marginTop: 22
   },
   modalText: {
     marginLeft: 15,
     textAlign: "center",
     justifyContent: 'space-around'
-  }
+  },
+  modalBackground: {
+    backgroundColor: '#00000040'
+  },
 });
 
 export default Loader;

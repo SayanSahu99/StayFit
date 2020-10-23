@@ -21,14 +21,16 @@ export default function Home({navigation}) {
         onPress={() => {
           dispatch(requestLogout());
           firebase.auth().signOut().then(() => {
-          dispatch(receiveLogout());
-          console.log("user signed out");
-          navigation.navigate('AuthNavigator');
-        }).catch(function(error) {
+            dispatch(receiveLogout());
+            console.log("user signed out");
+            navigation.navigate('AuthNavigator');
+          }).catch(function(error) {
           // An error happened.
           console.log(error);
           dispatch(logoutError(error));
-        });}}
+          });
+        }
+        }
       >
       </Button>
     </View>
