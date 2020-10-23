@@ -3,8 +3,6 @@ import React from 'react'
 import styles from "./style";
 import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Platform, KeyboardAvoidingView } from 'react-native';
 import { Button, SocialIcon } from 'react-native-elements';
-import * as Google from 'expo-google-app-auth';
-import firebase from 'firebase';
 import { connect } from 'react-redux';
 import {loginUser} from '../../Redux/ActionCreaters/auth'
 import Spinner from '../../components/activityIndicator';
@@ -35,7 +33,6 @@ class Register extends React.Component {
   render() {
   return (
     <View style={styles.containerView}>
-      {!this.props.isLoading ? 
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
@@ -78,10 +75,8 @@ class Register extends React.Component {
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      : <Spinner />
-  }
     </View>
-  )
-}
+    );
+  }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
