@@ -24,7 +24,7 @@ function Register(props) {
   useEffect(() => {
     return () => {
       if(props.auth.isAuthenticated) {
-        props.navigation.navigate('SignOut', {screen: 'Home'});
+        props.navigation.push('SignOut');
       }
     }
   }, []);
