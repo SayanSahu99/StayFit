@@ -1,24 +1,14 @@
 import React,  { useState, useEffect } from 'react'
+import firebase from 'firebase';
+import { useSelector, useDispatch } from 'react-redux';
 import SignInStack from './SignInStack'
 import SignOutStack from './SignOutStack'
-import firebase from 'firebase';
 
 export default function AuthNavigator() {
 
-  const [appUser, setUser] = useState(null);
-
-  useEffect(() => {
-    
-    firebase.auth().onAuthStateChanged(async (user) => {
-      setUser(user);
-    });
-
-    return () => {
-      setUser(null)
-    }
-  }, []);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   
-    return appUser == null ? (
+    return !isAuthenticated ? (
         <SignInStack />
     ) : (
       <SignOutStack />
