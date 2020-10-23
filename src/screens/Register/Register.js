@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from "./style";
 import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Platform, KeyboardAvoidingView } from 'react-native';
 import { Button, SocialIcon } from 'react-native-elements';
@@ -17,22 +17,23 @@ const mapDispatchToProps = dispatch => ({
   loginUser: () => dispatch(loginUser())
 })
 
-class Register extends React.Component {
+
+function Register(props) {
   // TODO: add firebase login function later
-
-  constructor(props) {
-    super(props);
-
-    if(props.auth.isAuthenticated) {
-      props.navigation.navigate('SignOut');
+  
+  useEffect(() => {
+    return () => {
+      if(props.auth.isAuthenticated) {
+        props.navigation.navigate('SignOut', {screen: 'Home'});
+      }
     }
-  }
+  }, []);
 
-  render() {
+
   return (
     <View style={styles.containerView}>
       
-      <Loader loading={this.props.auth.isLoading} />
+      <Loader loading={props.auth.isLoading} />
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
@@ -62,7 +63,7 @@ class Register extends React.Component {
                   <SocialIcon
                     type='google'
                     buttonStyle={styles.fbLoginButton}
-                    onPress={() => {this.props.loginUser();}}
+                    onPress={() => {props.loginUser();}}
                   />
                   <SocialIcon
                     type='twitter'
@@ -78,5 +79,5 @@ class Register extends React.Component {
     </View>
     );
   }
-}
+
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
