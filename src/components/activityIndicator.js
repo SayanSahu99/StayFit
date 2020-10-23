@@ -1,15 +1,15 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useTheme } from '@react-navigation/native';
 
 function Spinner() {
-    const { colors } = useTheme();
+  const { colors } = useTheme();
 
-    return (
-        <View style={styles.container}>
-    <ActivityIndicator size="large" animating={true} color={colors.primary}/>
-  </View>
-    );
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" animating={true} color={colors.primary} />
+    </View>
+  );
 }
 
 
