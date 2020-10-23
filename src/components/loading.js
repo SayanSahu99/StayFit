@@ -5,12 +5,15 @@ import {
   Modal,
   ActivityIndicator
 } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 const Loader = props => {
   const {
     loading,
     ...attributes
   } = props;
+
+  const { colors } = useTheme();
 
   return (
     <Modal
@@ -21,7 +24,9 @@ const Loader = props => {
       <View style={styles.modalBackground}>
         <View style={styles.activityIndicatorWrapper}>
           <ActivityIndicator
-            animating={loading} />
+            animating={loading}
+            size="large" animating={true} 
+            color={colors.primary} />
         </View>
       </View>
     </Modal>

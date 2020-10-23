@@ -120,9 +120,11 @@ signInWithGoogleAsync = async (dispatch) => {
         onSignIn(result, dispatch);
         return result.accessToken;
       } else {
+        dispatch(loginError(''));
         return { cancelled: true };
       }
     } catch (e) {
+      dispatch(loginError(''));
       return { error: true };
     }
   };

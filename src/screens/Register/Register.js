@@ -5,13 +5,11 @@ import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Platform, Key
 import { Button, SocialIcon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import {loginUser} from '../../Redux/ActionCreaters/auth'
-import Spinner from '../../components/activityIndicator';
+import Loader from '../../components/loading';
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.isLoading,
-    isAuthenticated: state.isAuthenticated,
-    errMess: state.errMess
+    auth: state.auth
   }
 }
 
@@ -25,7 +23,7 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
 
-    if(props.isAuthenticated) {
+    if(props.auth.isAuthenticated) {
       props.navigation.navigate('SignOut');
     }
   }
@@ -33,6 +31,8 @@ class Register extends React.Component {
   render() {
   return (
     <View style={styles.containerView}>
+      
+      <Loader loading={this.props.auth.isLoading} />
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
