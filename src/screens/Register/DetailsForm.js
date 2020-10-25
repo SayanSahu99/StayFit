@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import RNPickerSelect from 'react-native-picker-select';
@@ -53,7 +55,7 @@ export const DetailsForm = props => {
 
     const [gender, setGender] = useState('');
 
-    const selectItem = (value, formikProps) => {
+    const selectGender = (value, formikProps) => {
         setGender(value)
         formikProps.setFieldValue('gender', value);
     }
@@ -82,13 +84,14 @@ export const DetailsForm = props => {
                                 formikProps={formikProps}
                                 formikKey="name"
                                 placeholder="Name"
+                                leftIcon={{ type: 'font-awesome', name: 'user' }}
                                 autoFocus
                             />
                             <RNPickerSelect
                                 key={gender}
-                                onValueChange={value => selectItem(value, formikProps)}
+                                onValueChange={value => selectGender(value, formikProps)}
                                 placeholder={{
-                                    label: "Select gender...",
+                                    label: "Select Gender...",
                                     value: null
                                 }}
                                 items={[
@@ -103,14 +106,23 @@ export const DetailsForm = props => {
                                 formikProps={formikProps}
                                 formikKey="height"
                                 placeholder="Enter height in metres"
-                                autoFocus
+                                leftIcon={<Icon
+                                    name='ruler-vertical'
+                                    size={24}
+                                    color='black'
+                                />}
                             />
                             <StyledInput
                                 label="weight"
                                 formikProps={formikProps}
                                 formikKey="weight"
                                 placeholder="Enter weight in Kg"
-                                autoFocus
+                                leftIcon={
+                                    <Icon
+                                        name='weight'
+                                        size={24}
+                                        color='black'
+                                    />}
                             />
                             <View>
                                 <Button onPress={formikProps.handleSubmit} title="Submit" />
