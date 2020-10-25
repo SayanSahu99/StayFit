@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import RNPickerSelect from 'react-native-picker-select';
@@ -12,21 +11,46 @@ const validationSchema = yup.object().shape({
     name: yup
         .string()
         .min(4, "Too Short!")
-        .max(50, "Too Long!")
+        .max(30, "Too Long!")
         .required('Full name is required'),
+    age: yup
+        .number()
+        .max(4, "Too Long!!")
+        .lessThan(120, "Max age is 120 metres")
+        .positive("Age cannot be zero")
+        .required('Age is required'),
     height: yup
         .number()
         .max(10, "Too Long!!")
         .lessThan(2.7432, "Max height is 2.7432 metres")
-        .positive("Must be positive")
+        .positive("Height cannot be zero")
         .required('Height is required'),
     weight: yup
         .number()
         .max(10, "Too Long!!")
         .lessThan(500, "Max weight is 500 Kg")
-        .positive("Must be positive")
+        .positive("Weight cannot be Zero")
         .required('weight is required'),
+    gender: yup
+        .string()
+        .required('Gender is required'),
+    activity: yup
+        .string()
+        .required('Activity is required'),
+    medical: yup
+        .string()
+        .required('Medical Condition is required'),
+
 })
+
+const FieldWrapper = ({ children, label, formikProps, formikKey }) => (
+    <View>
+      {children}
+      <Text style={{ color: 'red' }}>
+        {formikProps.touched[formikKey] && formikProps.errors[formikKey]}
+      </Text>
+    </View>
+  );
 
 const StyledInput = ({ label, formikProps, formikKey, ...rest }) => {
     const inputStyles = {
@@ -40,37 +64,52 @@ const StyledInput = ({ label, formikProps, formikKey, ...rest }) => {
     }
 
     return (
-            <Input
-                style={inputStyles}
-                onChangeText={formikProps.handleChange(formikKey)}
-                onBlur={formikProps.handleBlur(formikKey)}
-                errorStyle={{ color: 'red' }}
-                errorMessage={formikProps.touched[formikKey] && formikProps.errors[formikKey]}
-                {...rest}
-            />
+        <Input
+            style={inputStyles}
+            onChangeText={formikProps.handleChange(formikKey)}
+            onBlur={formikProps.handleBlur(formikKey)}
+            errorStyle={{ color: 'red' }}
+            errorMessage={formikProps.touched[formikKey] && formikProps.errors[formikKey]}
+            {...rest}
+        />
     );
 };
 
 export const DetailsForm = props => {
 
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState('Select Gender ...');
+    const [activity, setActivity] = useState('Select Activity ...');
+    const [medical, setMedical] = useState('Select Medical Condition ...');
 
     const selectGender = (value, formikProps) => {
         setGender(value)
         formikProps.setFieldValue('gender', value);
     }
 
+    const selectActivity = (value, formikProps) => {
+        setActivity(value)
+        formikProps.setFieldValue('activity', value);
+    }
+
+    const selectMedical = (value, formikProps) => {
+        setMedical(value)
+        formikProps.setFieldValue('medical', value);
+    }
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.formStyles}>
                 <Formik
-                    
-                    initialValues={{ 
-                                    name: '',
-                                    gender:gender,
-                                    height: 0,
-                                    weight: 0
-                                }}
+
+                    initialValues={{
+                        name: '',
+                        gender: '',
+                        height: 0,
+                        weight: 0,
+                        age: 0,
+                        medical: '',
+                        activity:''
+                    }}
                     onSubmit={values => {
                         alert(JSON.stringify(values));
                         console.log(values)
@@ -87,20 +126,44 @@ export const DetailsForm = props => {
                                 leftIcon={{ type: 'font-awesome', name: 'user' }}
                                 autoFocus
                             />
-                            <RNPickerSelect
-                                key={gender}
-                                onValueChange={value => selectGender(value, formikProps)}
-                                placeholder={{
-                                    label: "Select Gender...",
-                                    value: null
-                                }}
-                                items={[
-                                    { label: 'Male', value: 'male' },
-                                    { label: 'Female', value: 'female' },
-                                ]}
-                                value={gender}
-                                style={styles.inputIOS}
+                            <StyledInput
+                                label="Age"
+                                formikProps={formikProps}
+                                formikKey="age"
+                                placeholder="Age"
+                                leftIcon={<Icon
+                                    name='birthday-cake'
+                                    size={24}
+                                    color='black'
+                                />}
                             />
+                            <FieldWrapper label={'Gender'} formikKey={'gender'} formikProps={formikProps}>
+                            <View style={styles.pickerContainer}>
+                                <View style={styles.pickerIcon}>
+                                    <Icon
+                                        name='venus-mars'
+                                        size={24}
+                                        color='black'
+                                    />
+                                </View>
+                                <View style={{ flex: 7 }}>
+                                    <RNPickerSelect
+                                        key={gender}
+                                        onValueChange={value => selectGender(value, formikProps)}
+                                        placeholder={{
+                                            label: "Select Gender ...",
+                                            value: null
+                                        }}
+                                        items={[
+                                            { label: 'Male', value: 'male' },
+                                            { label: 'Female', value: 'female' },
+                                        ]}
+                                        value={gender}
+                                        style={styles.inputIOS}
+                                    />
+                                </View>
+                            </View>
+                            </FieldWrapper>
                             <StyledInput
                                 label="height"
                                 formikProps={formikProps}
@@ -124,6 +187,67 @@ export const DetailsForm = props => {
                                         color='black'
                                     />}
                             />
+                            <FieldWrapper label={'Activity'} formikKey={'activity'} formikProps={formikProps}>
+                            <View style={{...styles.pickerContainer, marginBottom:10}}>
+                                <View style={styles.pickerIcon}>
+                                    <Icon
+                                        name='running'
+                                        size={24}
+                                        color='black'
+                                    />
+                                </View>
+                                <View style={{ flex: 7 }}>
+                                    <RNPickerSelect
+                                        key={activity}
+                                        onValueChange={value => selectActivity(value, formikProps)}
+                                        placeholder={{
+                                            label: "Select Activity ...",
+                                            value: null
+                                        }}
+                                        items={[
+                                            { label: 'Sedentary', value: 'sedenatry' },
+                                            { label: 'Lightly Active', value: 'light' },
+                                            { label: 'Moderately Active', value: 'moderate' },
+                                            { label: 'Very Active', value: 'high' },
+                                        ]}
+                                        value={activity}
+                                        style={styles.inputIOS}
+                                    />
+                                </View>
+                            </View>
+                            </FieldWrapper>
+                            <FieldWrapper label={'medical condition'} formikKey={'medical'} formikProps={formikProps}>
+                            <View style={{...styles.pickerContainer, marginBottom:10}}>
+                                <View style={styles.pickerIcon}>
+                                    <Icon
+                                        name='stethoscope'
+                                        size={24}
+                                        color='black'
+                                    />
+                                </View>
+                                <View style={{ flex: 7 }}>
+                                    <RNPickerSelect
+                                        key={medical}
+                                        onValueChange={value => selectMedical(value, formikProps)}
+                                        placeholder={{
+                                            label: "Select Medical Condition ...",
+                                            value: null
+                                        }}
+                                        items={[
+                                            { label: 'None', value: 'None' },
+                                            { label: 'Diabetes', value: 'diabetes' },
+                                            { label: 'Thyroid', value: 'thyroid' },
+                                            { label: 'PCOS', value: 'PCOS' },
+                                            { label: 'cholestrol', value: 'cholestrol' },
+                                            { label: 'Physical Injury', value: 'physical' },
+                                            { label: 'Hypertension', value: 'hypertension' },
+                                        ]}
+                                        value={medical}
+                                        style={styles.inputIOS}
+                                    />
+                                </View>
+                            </View>
+                            </FieldWrapper>
                             <View>
                                 <Button onPress={formikProps.handleSubmit} title="Submit" />
                             </View>
@@ -155,5 +279,13 @@ const styles = StyleSheet.create({
     formStyles: {
         margin: 15,
         marginVertical: 10
+    },
+    pickerContainer: {
+        flexDirection: 'row',
+    },
+    pickerIcon: {
+        flex: 1,
+        alignSelf: 'center',
+        alignItems: 'center'
     }
 });
