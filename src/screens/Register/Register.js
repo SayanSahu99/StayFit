@@ -22,7 +22,7 @@ function Register(props) {
   useEffect(() => {
     return () => {
       if (isAuthenticated) {
-        props.navigation.push('SignOut');
+        props.navigation.push('DetailsForm');
       }
     }
   }, []);

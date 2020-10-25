@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from '../screens/SignIn/SignIn';
-import OnBoarding from '../screens/onBoarding/OnBoarding';
 import Welcome from '../screens/Welcome/Welcome';
-import Register from '../screens/Register/Register';
+import RegisterStack from './RegisterStack';
 import { useTheme } from '@react-navigation/native';
-import Home from '../screens/Home/Home';
 import SignOutStack from './SignOutStack';
 
 
@@ -25,18 +23,7 @@ export default function SignInStack() {
       />
       <Stack.Screen 
         name="Register" 
-        component={Register} 
-        options={{
-          title: 'Register',
-          headerStyle: {
-            backgroundColor: colors.primary,
-          },
-          
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
+        component={RegisterStack} 
       />
       <Stack.Screen 
         name="SignIn" 
