@@ -6,7 +6,7 @@ import RNPickerSelect from 'react-native-picker-select';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export const Target = () => {
+export const Target = props => {
 
     const { colors } = useTheme();
 
@@ -48,11 +48,11 @@ export const Target = () => {
             </View>
             <View style={{
                 flex: 1,
-                marginHorizontal: 15,
-                marginVertical: 50
+                marginHorizontal: windowWidth*0.04,
+                marginVertical: 25,
             }}>
                 <Text style={styles.text}>
-                    What is your Target Weight?
+                    Set your Target Weight
                     </Text>
                 <Slider
                     value={targetWeight}
@@ -60,12 +60,16 @@ export const Target = () => {
                     maximumValue={50}
                     minimumValue={20}
                     step={1}
+                    trackStyle={{ height: 10, backgroundColor: colors.primary }}
+                    thumbStyle={{ height: 20, width: 20, backgroundColor: colors.primary }}
+                    
                 />
-                <Text style={styles.text}>
+                <Text h4 style={styles.text}>
                     {targetWeight} kgs
                      </Text>
                 <View style={{paddingTop:20}}>
-                    <Text style={styles.text}>How quickly do you want to gain { targetWeight} kgs?</Text>
+                    <Text style={styles.text}>How quickly do you want to gain { targetWeight } kgs?</Text>
+                    <View style={styles.pickerView}>
                     <RNPickerSelect
                         key={targetPace}
                         onValueChange={value => setTragetPace(value)}
@@ -82,14 +86,22 @@ export const Target = () => {
                         value={targetPace}
                         style={styles.inputIOS}
                     />
+                    </View>
                     <Text style={styles.text}>You will reach your goal in x months x</Text>
                     <Text style={styles.text}>days</Text>
+                    
                 </View>
             </View>
 
+            <View
+                style={{backgroundColor: colors.primary}}
+            >
             <Button
                 title="I commit to my goal"
+                onPress={() => props.navigation.push("Home")}
+                titleStyle={{fontSize:20}}
             />
+            </View>
            
          
             
@@ -103,7 +115,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     card: {
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     text: {
         alignSelf: 'center',
@@ -119,6 +131,11 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: 'white',
         color: 'black',
+    },
+    pickerView: {
+        marginHorizontal:windowWidth*0.25, 
+        backgroundColor:'white', 
+        marginVertical: 10
     }
 });
 
