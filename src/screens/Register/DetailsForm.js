@@ -113,7 +113,8 @@ export const DetailsForm = props => {
                         activity: ''
                     }}
                     onSubmit={values => {
-                        alert(JSON.stringify(values));
+                        // alert(JSON.stringify(values));
+                        props.navigation.push("Target");
                         console.log(values)
                     }}
                     validationSchema={validationSchema}

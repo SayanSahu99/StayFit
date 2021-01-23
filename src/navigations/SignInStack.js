@@ -16,18 +16,18 @@ export default function SignInStack() {
   return (
 
     <Stack.Navigator>
-      <Stack.Screen 
-        options={{headerShown: false}}
-        name="Welcome" 
-        component={Welcome} 
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Welcome"
+        component={Welcome}
       />
-      <Stack.Screen 
-        name="Register" 
-        component={RegisterStack} 
+      <Stack.Screen
+        name="Register"
+        component={RegisterStack}
       />
-      <Stack.Screen 
-        name="SignIn" 
-        component={SignIn} 
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
         options={{
           title: 'Sign In',
           headerStyle: {
@@ -39,12 +39,12 @@ export default function SignInStack() {
           },
         }}
       />
-      <Stack.Screen 
-        name="SignOut" 
-        options={{headerShown: false}}
-        component={SignOutStack} 
-       />
+      <Stack.Screen
+        name="SignOut"
+        options={{ headerShown: false }}
+        component={SignOutStack}
+      />
     </Stack.Navigator>
-  
+
   )
 }
