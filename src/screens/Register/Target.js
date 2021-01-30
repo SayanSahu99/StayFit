@@ -98,13 +98,10 @@ export const Target = props => {
             >
             <Button
                 title="I commit to my goal"
-                onPress={() => props.navigation.push("Home")}
+                onPress={() => props.navigation.push("Main")}
                 titleStyle={{fontSize:20}}
             />
             </View>
-           
-         
-            
         </View>
     )
 }
