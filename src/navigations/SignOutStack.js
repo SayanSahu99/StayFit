@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Home from '../screens/Home/Home'
+import Logout from '../screens/Logout/Logout';
 import { DetailsForm } from '../screens/Register/DetailsForm';
 import { Target } from '../screens/Register/Target';
 import { useTheme, useNavigation, DrawerActions } from '@react-navigation/native';
@@ -50,11 +51,16 @@ export default function SignOutStack(props) {
       <Stack.Screen 
         name="Main" 
         options={{ 
-          headerRight: () => <Icon name='bars'
+          headerLeft: () => <Icon name='bars'
           size={24}
           color='black'
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}></Icon>
-         }} 
+          onPress={() => {
+            navigation.dispatch(DrawerActions.toggleDrawer());
+            
+          }}></Icon>,
+          headerLeftContainerStyle: {paddingHorizontal:20},
+
+         }}
         component={drawerNavigator} />
     </Stack.Navigator>
   );
@@ -72,7 +78,9 @@ export function drawerNavigator() {
       }}
     >
         <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="Logout" component={Logout} />
     </Drawer.Navigator>
     
   )
+
 }

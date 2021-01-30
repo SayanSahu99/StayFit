@@ -1,41 +1,58 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
+import { View } from 'react-native'
+import {ListItem, Text} from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import firebase from 'firebase';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from './style'
-import { logoutError, receiveLogout, requestLogout } from '../../Redux/ActionCreaters/auth'
 import Spinner from '../../components/activityIndicator';
 
 export default function Home({ navigation }) {
   // TODO: add firebase sign-out and user info function later
 
   const isLoading = useSelector(state => state.auth.isLoading);
-  const dispatch = useDispatch();
 
+  const list = [
+    {
+      title: 'Nutrition',
+      icon: 'apple-alt',
+      subtitle: '1000 cal / 2200 cal'
+    },
+    {
+      title: 'Water',
+      icon: 'glass-whiskey',
+      subtitle: '2/8'
+    },
+    ];
+  
   return (
     <View style={styles.containerView}>
       {isLoading ? <Spinner /> : (
         <View>
           <View>
-            <Text>Home</Text>
+            <View style={styles.TextView}> 
+              <Text h1 style={styles.greetingText}>Hello Name</Text>
+              <Text h4>Eat the right amount of food and stay hydrated throughout the day</Text>
+            </View>
           </View>
-          <Button
-            title="Sign Out"
-            onPress={() => {
-              dispatch(requestLogout());
-              firebase.auth().signOut().then(() => {
-                dispatch(receiveLogout());
-                console.log("user signed out");
-                navigation.navigate('AuthNavigator');
-              }).catch(function (error) {
-                // An error happened.
-                console.log(error);
-                dispatch(logoutError(error));
-              });
+          <View style={styles.listView}>
+            {
+              list.map((item, i) => (
+                <ListItem key={i} bottomDivider>
+                  <Icon
+                      name={item.icon}
+                      size={30}
+                      color='black'
+                  />
+                  <ListItem.Content>
+                    <ListItem.Title><Text style={styles.listText}>{item.title}</Text></ListItem.Title>
+                    <ListItem.Subtitle><Text style={styles.listSubText}>{item.subtitle}</Text></ListItem.Subtitle>
+                  </ListItem.Content>
+                  <ListItem.Chevron />
+                </ListItem>
+              ))
             }
-            }
-          >
-          </Button>
+          </View>
         </View>
       )}
     </View>
