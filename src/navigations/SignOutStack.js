@@ -2,7 +2,8 @@ import * as React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Home from '../screens/Home/Home'
+import Home from '../screens/Home/Home';
+import Water from '../screens/Home/Water'
 import Logout from '../screens/Logout/Logout';
 import { DetailsForm } from '../screens/Register/DetailsForm';
 import { Target } from '../screens/Register/Target';
@@ -62,6 +63,22 @@ export default function SignOutStack(props) {
 
          }}
         component={drawerNavigator} />
+
+        <Stack.Screen 
+            name="Water" 
+            component={Water} 
+            options={{
+              title: 'Daily Water Intake',
+              headerStyle: {
+              backgroundColor: colors.primary,
+              },
+              
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+              fontWeight: 'bold',
+              },
+          }}
+        />
     </Stack.Navigator>
   );
 }

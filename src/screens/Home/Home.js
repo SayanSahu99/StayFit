@@ -38,7 +38,7 @@ export default function Home({ navigation }) {
           <View style={styles.listView}>
             {
               list.map((item, i) => (
-                <ListItem key={i} bottomDivider>
+                <ListItem key={i} onPress={() => {if(i==1) navigation.push("Water") }} bottomDivider>
                   <Icon
                       name={item.icon}
                       size={30}
