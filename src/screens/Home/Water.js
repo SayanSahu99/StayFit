@@ -19,26 +19,6 @@ const Water = () => {
 
     const [numGlasses, changeGlasses] = useState(0);
 
-    
-    const data = {
-      labels: ["January", "February", "March", "April", "May", "June"],
-      datasets: [
-        {
-          data: [20, 45, 28, 80, 99, 43],
-        }
-      ],
-    };
-
-    const chartConfig={
-      backgroundColor:"transparent",
-      backgroundGradientFrom: '#54544e',
-      backgroundGradientTo: '#ffffff',
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16
-      }
-    }
-
     return (
         <View style={styles.container}>
             <Text style={styles.text}><Text h4>{numGlasses}</Text> / 8 glasses</Text>
