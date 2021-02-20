@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
-import { ListItem, Text, Card, Divider } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { ListItem, Text, Card, Divider, Icon } from 'react-native-elements'
 import { useSelector } from 'react-redux';
 import Constants from 'expo-constants';
 import Spinner from '../../components/activityIndicator';
@@ -20,6 +19,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Breakfast',
             subtitle: '100 / 700 Cal',
+            onPress:() =>{navigation.navigate("Search")},
             food: [
                 {
                     foodName: 'egg',
@@ -37,6 +37,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Morning Snacks',
             subtitle: '100 / 700 Cal',
+            onPress:() =>{console.log("Hello")},
             food: [
                 {
                     foodName: 'egg',
@@ -48,6 +49,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Lunch',
             subtitle: '100 / 700 Cal',
+            onPress:() =>{console.log("Hello")},
             food: [
                 {
                     foodName: 'egg',
@@ -59,6 +61,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Evening Snacks',
             subtitle: '100 / 700 Cal',
+            onPress:() =>{console.log("Hello")},
             food: [
                 {
                     foodName: 'egg',
@@ -70,6 +73,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Dinner',
             subtitle: '100 / 700 Cal',
+            onPress:() =>{console.log("Dinner")},
             food: [
                 {
                     foodName: 'egg',
@@ -101,14 +105,13 @@ export default function Nutriton({ navigation }) {
 
                                     <Text>
 
-                                        <View style={{ paddingRight: 15, paddingTop: 5 }}><Text>{item.subtitle}</Text></View>
-                                            <Icon
-                                                name="plus-circle"
-                                                size={21}
-                                                color={colors.primary}
-                                                onPress={item.btnOnPress}
-                                            />
-
+                                        <View style={{ paddingRight: 15, paddingTop: 5 }}><Text style={styles.listSubText}>{item.subtitle}</Text></View>
+                                        <Icon
+                                           size={25}
+                                            name='plus'
+                                            type='font-awesome'
+                                            color={colors.primary}
+                                            onPress={item.onPress} />
                                     </Text>
 
                                 </View>
@@ -133,18 +136,6 @@ export default function Nutriton({ navigation }) {
                     ))
                 }
             </View>
-            {/* {
-              list.map((item, i) => (
-                <ListItem key={i} onPress={item.onPress} bottomDivider>
-                  <ListItem.Content>
-                    <ListItem.Title><Text style={styles.listText}>{item.title}</Text></ListItem.Title>
-                  </ListItem.Content>
-                  <ListItem.Subtitle><Text style={styles.listSubText}>{item.subtitle}</Text></ListItem.Subtitle>
-                  <ListItem.Chevron/>
-                </ListItem>
-              ))
-            } */}
-
         </ScrollView>
     )
 }
@@ -184,7 +175,7 @@ const styles = StyleSheet.create({
     },
 
     listSubText: {
-        fontSize: 14
+        fontSize: 16
     }
 
 });
