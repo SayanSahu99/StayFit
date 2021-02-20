@@ -3,11 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Home from '../screens/Home/Home';
-import Water from '../screens/Home/Water'
+import Water from '../screens/Home/Water';
+import Nutrition from '../screens/Home/Nutrition';
 import Logout from '../screens/Logout/Logout';
 import { DetailsForm } from '../screens/Register/DetailsForm';
 import { Target } from '../screens/Register/Target';
 import { useTheme, useNavigation, DrawerActions } from '@react-navigation/native';
+import Nutriton from '../screens/Home/Nutrition';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -34,70 +36,86 @@ export default function SignOutStack(props) {
           },
       }}
       /> */}
-      <Stack.Screen 
-        name="Target" 
-        component={Target} 
+      <Stack.Screen
+        name="Target"
+        component={Target}
         options={{
           title: 'Set Your Target Weight',
           headerStyle: {
-          backgroundColor: colors.primary,
+            backgroundColor: colors.primary,
           },
-          
+
           headerTintColor: '#fff',
           headerTitleStyle: {
-          fontWeight: 'bold',
+            fontWeight: 'bold',
           },
-      }}
+        }}
       />
-      <Stack.Screen 
-        name="Main" 
-        options={{ 
+      <Stack.Screen
+        name="Main"
+        options={{
           headerLeft: () => <Icon name='bars'
-          size={24}
-          color='black'
-          onPress={() => {
-            navigation.dispatch(DrawerActions.toggleDrawer());
-            
-          }}></Icon>,
-          headerLeftContainerStyle: {paddingHorizontal:20},
+            size={24}
+            color='black'
+            onPress={() => {
+              navigation.dispatch(DrawerActions.toggleDrawer());
 
-         }}
+            }}></Icon>,
+          headerLeftContainerStyle: { paddingHorizontal: 20 },
+
+        }}
         component={drawerNavigator} />
 
-        <Stack.Screen 
-            name="Water" 
-            component={Water} 
-            options={{
-              title: 'Daily Water Intake',
-              headerStyle: {
-              backgroundColor: colors.primary,
-              },
-              
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-              fontWeight: 'bold',
-              },
-          }}
-        />
+      <Stack.Screen
+        name="Water"
+        component={Water}
+        options={{
+          title: 'Daily Water Intake',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Nutrition"
+        component={Nutrition}
+        options={{
+          title: 'Count Calories',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
 
 export function drawerNavigator() {
-  
+
   return (
-  
-    <Drawer.Navigator 
+
+    <Drawer.Navigator
       initialRouteName="Home"
       drawerStyle={{
         backgroundColor: '#ffffff',
         width: 240,
       }}
     >
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Logout" component={Logout} />
+      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Logout" component={Logout} />
     </Drawer.Navigator>
-    
+
   )
 
 }
