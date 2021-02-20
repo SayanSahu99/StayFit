@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Home from '../screens/Home/Home';
 import Water from '../screens/Home/Water';
 import Nutrition from '../screens/Home/Nutrition';
+import SearchFood from '../screens/Home/SearchFood';
 import Logout from '../screens/Logout/Logout';
 import { DetailsForm } from '../screens/Register/DetailsForm';
 import { Target } from '../screens/Register/Target';
@@ -97,6 +98,13 @@ export default function SignOutStack(props) {
           },
         }}
       />
+
+      <Stack.Screen
+        name="Search"
+        component={SearchFood}
+        options={{headerShown: false }}
+      />
+
     </Stack.Navigator>
   );
 }
