@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { View, Dimensions } from 'react-native'
+import { View } from 'react-native'
 import { ListItem, Text, BottomSheet } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import firebase from 'firebase';
 import { useSelector } from 'react-redux';
-import styles from './style'
+import styles from './style';
 import Spinner from '../../components/activityIndicator';
 
 export default function Home({ navigation }) {
@@ -16,24 +15,24 @@ export default function Home({ navigation }) {
   const bottomSheetList = [
     {
       title: 'Breakfast',
-      subtitle: '100 / 700'
+      subtitle: '100 / 700 Cal'
     },
     {
       title: 'Morning Snacks',
-      subtitle: '100 / 700'
+      subtitle: '100 / 700 Cal'
     },
     {
       title: 'Lunch',
       subtitle:
-        '100 / 700'
+        '100 / 700 Cal'
     },
     {
       title: 'Evening Snacks',
-      subtitle: '100 / 700'
+      subtitle: '100 / 700 Cal'
     },
     {
       title: 'Dinner',
-      subtitle: '100 / 700'
+      subtitle: '100 / 700 Cal'
     },
     {
       title: 'Cancel',
@@ -48,13 +47,15 @@ export default function Home({ navigation }) {
       title: 'Nutrition',
       icon: 'apple-alt',
       subtitle: '1000 cal / 2200 cal',
-      onPress: () => setIsVisible(true)
+      onPress: () => {navigation.navigate("Nutrition")},
+      btnOnPress: () => {setIsVisible(true)}
     },
     {
       title: 'Water',
       icon: 'glass-whiskey',
       subtitle: '2/8',
-      onPress: () => navigation.push("Water")
+      onPress: () => navigation.navigate("Water"),
+      btnOnPress: () => {}
     },
   ];
 
@@ -81,11 +82,17 @@ export default function Home({ navigation }) {
                     <ListItem.Title><Text style={styles.listText}>{item.title}</Text></ListItem.Title>
                     <ListItem.Subtitle><Text style={styles.listSubText}>{item.subtitle}</Text></ListItem.Subtitle>
                   </ListItem.Content>
-                  <ListItem.Chevron />
+                  <Icon
+                    name="plus-circle"
+                    size={25}
+                    color='black'
+                    onPress={item.btnOnPress}
+                  />
                 </ListItem>
               ))
             }
           </View>
+        
           <View style={{height:100}}>
             <Text>
               <BottomSheet
@@ -98,10 +105,10 @@ export default function Home({ navigation }) {
                     <ListItem.Content>
                       <View>
                       <ListItem.Title style={l.titleStyle}><Text style={{fontWeight:'bold'}}>{l.title}</Text></ListItem.Title>
-                      {l.subtitle ? <ListItem.Subtitle><Text>{l.subtitle}</Text></ListItem.Subtitle> : <View></View>}
                       </View>
                     </ListItem.Content>
-                    <ListItem.Chevron />
+                    {l.subtitle ? <ListItem.Subtitle><Text>{l.subtitle}</Text></ListItem.Subtitle> : <View></View>}
+                    <ListItem.Chevron/>
                   </ListItem>
                 ))}
               </BottomSheet>;
