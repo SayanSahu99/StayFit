@@ -15,7 +15,7 @@ import Spinner from './src/components/activityIndicator';
 const MyTheme = {
   colors: {
     primary: '#1E88E5',
-    background: '#E3F2FD',
+    background: '#ffffff',
   },
 };
 
