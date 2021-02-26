@@ -8,9 +8,9 @@ import Nutrition from '../screens/Home/Nutrition';
 import SearchFood from '../screens/Home/SearchFood';
 import Logout from '../screens/Logout/Logout';
 import { DetailsForm } from '../screens/Register/DetailsForm';
+import FoodDetails  from '../screens/Home/FoodDetails';
 import { Target } from '../screens/Register/Target';
 import { useTheme, useNavigation, DrawerActions } from '@react-navigation/native';
-import Nutriton from '../screens/Home/Nutrition';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -102,7 +102,23 @@ export default function SignOutStack(props) {
       <Stack.Screen
         name="Search"
         component={SearchFood}
-        options={{headerShown: false }}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="FoodDetails"
+        component={FoodDetails}
+        options={{
+          title: 'Add Food',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
       />
 
     </Stack.Navigator>
