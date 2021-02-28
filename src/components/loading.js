@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
+import { requestLogout } from '../Redux/ActionCreaters/auth'
+import { useSelector, useDispatch } from 'react-redux';
 
 const Loader = props => {
   const {
@@ -15,6 +17,7 @@ const Loader = props => {
   } = props;
 
   const { colors } = useTheme();
+  const dispatch = useDispatch();
 
   return (
     <Modal

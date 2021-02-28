@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { Button, SocialIcon } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, requestLogin } from '../../Redux/ActionCreaters/auth'
+import { loginUserFacebook, loginUserGoogle, requestLogin } from '../../Redux/ActionCreaters/auth'
 import Loader from '../../components/loading';
 
 
@@ -59,14 +59,17 @@ function Register(props) {
                   <SocialIcon
                     type='facebook'
                     buttonStyle={styles.fbLoginButton}
-                    onPress={() => { }}
+                    onPress={() => { 
+                      dispatch(requestLogin());
+                      dispatch(loginUserFacebook());
+                    }}
                   />
                   <SocialIcon
                     type='google'
                     buttonStyle={styles.fbLoginButton}
                     onPress={() => {
                       dispatch(requestLogin());
-                      dispatch(loginUser());
+                      dispatch(loginUserGoogle());
                     }}
                   />
                   <SocialIcon

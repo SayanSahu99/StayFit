@@ -1,6 +1,7 @@
 import * as Google from 'expo-google-app-auth';
 import firebase from 'firebase';
 import * as ActionTypes from '../actionTypes';
+import * as Facebook from 'expo-facebook';
 
 export const requestLogin = () => {
   return {
@@ -40,7 +41,98 @@ export const logoutError = (message) => {
   }
 }
 
-export const loginUser = () => (dispatch) => {
+onSignInFacebook = (result, dispatch) => {
+  var unsubscribe = firebase.auth().onAuthStateChanged(
+    function (user) {
+      if(user != null){
+        console.log("User: ", user);
+      }
+      else{
+        unsubscribe();
+        console.log("result: ", result);
+        var credential = firebase.auth.FacebookAuthProvider.credential(result.token);
+        // Sign in with credential from the Google user.
+        firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then((user)=>{
+            dispatch(receiveLogin());
+            console.log("User: ", user);
+          })
+          .catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            dispatch(loginError(error.message));
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+          });
+      } 
+    }
+  );
+}
+
+// https://www.youtube.com/watch?v=LJY73nD5bwQ
+export const loginUserFacebook = () => (dispatch) => {
+  Facebooklogin(dispatch);
+}
+Facebooklogin = async (dispatch) => {
+  try {
+    dispatch(loginError(''));
+    await Facebook.initializeAsync({
+      appId: '151657423467636',
+    });
+    const {type, token} = await Facebook.logInWithReadPermissionsAsync({
+      permissions: ['public_profile'],
+    });
+    if (type === 'success') {
+      dispatch(receiveLogin());
+      const credential = firebase.auth.FacebookAuthProvider.credential(token);
+      console.log("credential - ", credential);
+      firebase.auth().signInWithCredential(credential)
+      .then((User) =>{
+        dispatch(receiveLogin());
+        console.log('user signed in  ----- ', User.additionalUserInfo.profile.picture.data.url);
+        if (User.additionalUserInfo.isNewUser) {
+          firebase
+            .database()
+            .ref('/users/' + User.user.uid)
+            .set({
+              gmail: User.user.email,
+              profile_picture: User.additionalUserInfo.profile.picture.data.url,
+              first_name: User.additionalUserInfo.profile.first_name,
+              last_name: User.additionalUserInfo.profile.last_name,
+              created_at: Date.now()
+            })
+            .then(function (snapshot) {
+              // console.log('Snapshot', snapshot);
+            });
+        } else {
+          firebase
+            .database()
+            .ref('/users/' + User.user.uid)
+            .update({
+              last_logged_in: Date.now()
+            });
+        }
+      })
+      .catch((error) =>{
+        console.log("getting Error!!!! !!!!!");
+        dispatch(loginError(error));
+      })
+    } else {
+      // type === 'cancel'
+    }
+  } catch ({ message }) {
+    dispatch(loginError(message));
+  }
+}
+
+
+export const loginUserGoogle = () => (dispatch) => {
   // We dispatch requestLogin to kickoff the call to the API
   signInWithGoogleAsync(dispatch);
 };
@@ -63,7 +155,7 @@ isUserEqual = (googleUser, firebaseUser) => {
   return false;
 };
 
-onSignIn = (googleUser, dispatch) => {
+onSignInGoogle = (googleUser, dispatch) => {
   console.log('Google Auth Response');
   // We need to register an Observer on Firebase Auth to make sure auth is initialized.
   var unsubscribe = firebase.auth().onAuthStateChanged(
@@ -135,7 +227,7 @@ signInWithGoogleAsync = async (dispatch) => {
     });
 
     if (result.type === 'success') {
-      onSignIn(result, dispatch);
+      onSignInGoogle(result, dispatch);
       return result.accessToken;
     } else {
       dispatch(loginError(''));
