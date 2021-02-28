@@ -33,6 +33,7 @@ export default function App() {
   
 
   LogBox.ignoreLogs(['Setting a timer']);
+  LogBox.ignoreLogs(['useNativeDriver']);
   return (
     <Provider store={store}>
       <PersistGate 
