@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { ListItem, Text, BottomSheet } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
-import { useSelector } from 'react-redux';
 import styles from './style';
 import { useTheme } from '@react-navigation/native';
 import Spinner from '../../components/activityIndicator';
@@ -10,7 +9,6 @@ import Spinner from '../../components/activityIndicator';
 export default function Home({ navigation }) {
   // TODO: add firebase sign-out and user info function later
   const { colors } = useTheme();
-  const isLoading = useSelector(state => state.auth.isLoading);
   const [isVisible, setIsVisible] = useState(false);
 
   const bottomSheetList = [
@@ -77,7 +75,6 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.containerView}>
-      {isLoading ? <Spinner /> : (
         <View>
           <View>
             <View style={styles.TextView}>
@@ -132,7 +129,7 @@ export default function Home({ navigation }) {
             </Text>
           </View>
         </View>
-      )}
+      
     </View>
 
   )

@@ -25,7 +25,6 @@ export default function Logout({ navigation }) {
 
   return (
     <View style={styles.centeredView}>
-      {isLoading ? <Spinner /> : (
         <View>
 
           <Modal isVisible={isModelOpen}>
@@ -58,7 +57,6 @@ export default function Logout({ navigation }) {
               </View>
           </Modal>
         </View>
-      )}
     </View>
   )
 }
