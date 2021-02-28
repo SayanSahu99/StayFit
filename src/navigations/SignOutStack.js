@@ -57,12 +57,20 @@ export default function SignOutStack(props) {
         options={{
           headerLeft: () => <Icon name='bars'
             size={24}
-            color='black'
+            color='white'
             onPress={() => {
               navigation.dispatch(DrawerActions.toggleDrawer());
 
             }}></Icon>,
           headerLeftContainerStyle: { paddingHorizontal: 20 },
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
 
         }}
         component={drawerNavigator} />
