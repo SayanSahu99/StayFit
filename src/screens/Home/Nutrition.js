@@ -7,6 +7,7 @@ import Spinner from '../../components/activityIndicator';
 import ProgressBar from 'react-native-progress/Bar';
 import { useTheme } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+import DatePicker from 'react-native-datepicker'
 
 export default function Nutriton({ navigation }) {
 
@@ -14,12 +15,13 @@ export default function Nutriton({ navigation }) {
     const { colors } = useTheme();
     const isLoading = useSelector(state => state.auth.isLoading);
     const [calories, changeCalories] = useState(0);
+    const [date, onDateChange] = useState("2016-05-15");
 
     const list = [
         {
             title: 'Breakfast',
             subtitle: '100 / 700 Cal',
-            onPress:() =>{navigation.navigate("Search")},
+            onPress: () => { navigation.navigate("Search") },
             food: [
                 {
                     foodName: 'egg',
@@ -37,7 +39,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Morning Snacks',
             subtitle: '100 / 700 Cal',
-            onPress:() =>{console.log("Hello")},
+            onPress: () => { console.log("Hello") },
             food: [
                 {
                     foodName: 'egg',
@@ -49,7 +51,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Lunch',
             subtitle: '100 / 700 Cal',
-            onPress:() =>{console.log("Hello")},
+            onPress: () => { console.log("Hello") },
             food: [
                 {
                     foodName: 'egg',
@@ -61,7 +63,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Evening Snacks',
             subtitle: '100 / 700 Cal',
-            onPress:() =>{console.log("Hello")},
+            onPress: () => { console.log("Hello") },
             food: [
                 {
                     foodName: 'egg',
@@ -73,7 +75,7 @@ export default function Nutriton({ navigation }) {
         {
             title: 'Dinner',
             subtitle: '100 / 700 Cal',
-            onPress:() =>{console.log("Dinner")},
+            onPress: () => { console.log("Dinner") },
             food: [
                 {
                     foodName: 'egg',
@@ -88,6 +90,34 @@ export default function Nutriton({ navigation }) {
         <ScrollView>
             {isLoading ? <Spinner /> : (
                 <View style={{ marginHorizontal: 20, paddingTop: Constants.statusBarHeight, paddingBottom: Constants.statusBarHeight }}>
+                    <View style={{alignSelf:"center", marginBottom:20}}>
+                        <DatePicker
+                            style={{ width: 200 }}
+                            date={date}
+                            mode="date"
+                            placeholder="select date"
+                            format="YYYY-MM-DD"
+                            minDate="2016-05-01"
+                            maxDate="2016-06-01"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            customStyles={{
+                                dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0,
+                                },
+                                dateInput: {
+                                    marginLeft: 36,
+                                    borderWidth:2,
+                                    borderColor:"#000"
+                                }
+                                // ... You can check the source to find the other keys.
+                            }}
+                            onDateChange={(date) => onDateChange(date)}
+                        />
+                    </View>
                     <Text style={styles.text}><Text h4>{calories}</Text> / 2200 Cals</Text>
                     <View style={styles.progressBar}>
                         <ProgressBar progress={calories / 2200} width={width * 0.9} color={colors.primary} />
@@ -99,7 +129,7 @@ export default function Nutriton({ navigation }) {
                     list.map((item, i) => (
 
                         <View key={i} style={{ paddingBottom: 5 }}>
-                            <Card>
+                            <Card containerStyle={styles.cardStyle}>
                                 <View style={styles.cardView}>
                                     <Card.FeaturedTitle><Text style={styles.listText}>{item.title}</Text></Card.FeaturedTitle>
 
@@ -107,7 +137,7 @@ export default function Nutriton({ navigation }) {
 
                                         <View style={{ paddingRight: 15, paddingTop: 5 }}><Text style={styles.listSubText}>{item.subtitle}</Text></View>
                                         <Icon
-                                           size={25}
+                                            size={25}
                                             name='plus'
                                             type='font-awesome'
                                             color={colors.primary}
@@ -119,11 +149,11 @@ export default function Nutriton({ navigation }) {
                                 {
                                     item.food.map((l, i) => (
                                         <View key={i}>
-                                            <Divider />
+                                            <Divider style={styles.dividerStyle} />
                                             <ListItem onPress={() => console.log(i)} >
                                                 <ListItem.Content>
                                                     <ListItem.Title><Text style={styles.listText}>{l.foodName}</Text></ListItem.Title>
-                                                    <View style={{marginTop:5}}><ListItem.Subtitle><Text style={styles.listSubText}>{l.quantity}</Text></ListItem.Subtitle></View>
+                                                    <View style={{ marginTop: 5 }}><ListItem.Subtitle><Text style={styles.listSubText}>{l.quantity}</Text></ListItem.Subtitle></View>
                                                 </ListItem.Content>
                                                 <ListItem.Subtitle><Text style={styles.listSubText}>{l.cal} Cal</Text></ListItem.Subtitle>
                                             </ListItem>
@@ -156,6 +186,11 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
 
+    cardStyle: {
+        borderWidth: 2,
+        borderColor: "#000000"
+    },
+
     cardView: {
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -176,6 +211,11 @@ const styles = StyleSheet.create({
 
     listSubText: {
         fontSize: 16
+    },
+
+    dividerStyle: {
+        borderWidth: 0.5,
+        borderColor: "#000000"
     }
 
 });
