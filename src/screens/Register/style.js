@@ -48,6 +48,7 @@ socialView: {
   width: '100%',
   justifyContent: 'center',
   alignItems: 'center',
+  
   flex: 1,
 },
 socialTextView:{
@@ -56,12 +57,7 @@ socialTextView:{
   alignItems:'center',
 },
 socialButtonView:{
-  flexDirection:'row',
-  justifyContent:'center'
-},
-fbLoginButton: {
-  height: 45,
-  marginTop: 10,
-  backgroundColor: 'transparent',
+  justifyContent:'flex-start',
+  alignSelf:"stretch",
 },
 };
