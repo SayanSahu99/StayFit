@@ -58,7 +58,8 @@ function Register(props) {
                 <View style={styles.socialButtonView}>
                   <SocialIcon
                     type='facebook'
-                    buttonStyle={styles.fbLoginButton}
+                    button
+                    title='Sign In With Facebook'
                     onPress={() => { 
                       dispatch(requestLogin());
                       dispatch(loginUserFacebook());
@@ -66,22 +67,19 @@ function Register(props) {
                   />
                   <SocialIcon
                     type='google'
-                    buttonStyle={styles.fbLoginButton}
+                    button
+                    title='Sign In With Google'
                     onPress={() => {
                       dispatch(requestLogin());
                       dispatch(loginUserGoogle());
                     }}
-                  />
-                  <SocialIcon
-                    type='twitter'
-                    buttonStyle={styles.fbLoginButton}
-                    onPress={() => { }}
                   />
                 </View>
               </View>
             </View>
           </View>
         </TouchableWithoutFeedback>
+        <View style={{alignSelf:"stretch"}}></View>
       </KeyboardAvoidingView>
     </View>
   );
