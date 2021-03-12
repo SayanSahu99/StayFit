@@ -104,13 +104,18 @@ Facebooklogin = async (dispatch) => {
             profile_picture: User.additionalUserInfo.profile.picture.data.url,
             first_name: User.additionalUserInfo.profile.first_name,
             last_name: User.additionalUserInfo.profile.last_name,
-            created_at: Date.now()
+            created_at: Date.now(),
+            last_logged_in: Date.now(),
           }));
             
         } else {
           dispatch(addExistingUserFirebase({
             uid: User.user.uid,
-            last_logged_in: Date.now()
+            last_logged_in: Date.now(),
+            email: User.user.email,
+            profile_picture: User.additionalUserInfo.profile.picture.data.url,
+            first_name: User.additionalUserInfo.profile.first_name,
+            last_name: User.additionalUserInfo.profile.last_name,
           }));
         }
       })
@@ -177,11 +182,16 @@ onSignInGoogle = (googleUser, dispatch) => {
                   profile_picture: result.additionalUserInfo.profile.picture,
                   first_name: result.additionalUserInfo.profile.given_name,
                   last_name: result.additionalUserInfo.profile.family_name,
-                  created_at: Date.now()
+                  created_at: Date.now(),
+                  last_logged_in: Date.now()
                 }));
             } else {
               dispatch(addExistingUserFirebase({
                 uid: result.user.uid,
+                email: result.user.email,
+                profile_picture: result.additionalUserInfo.profile.picture,
+                first_name: result.additionalUserInfo.profile.given_name,
+                last_name: result.additionalUserInfo.profile.family_name,
                 last_logged_in: Date.now()
                 }, {merge: true}));
             }

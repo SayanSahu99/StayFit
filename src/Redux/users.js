@@ -15,11 +15,9 @@ export const User = (state = {
                 last_name: action.payload.last_name,
                 profile_picture: action.payload.profile_picture,
                 created_at: action.payload.created_at,
-                email: action.payload.email
-            };
-        case ActionTypes.ADD_EXISTING_USER:
-            return {...state,
+                email: action.payload.email,
                 last_logged_in: action.payload.last_logged_in,
+                uid: action.payload.uid
             };
         default:
             return state

@@ -2,19 +2,12 @@ import firebase from 'firebase';
 import * as ActionTypes from '../actionTypes';
 
 
-export const addNewUser = (user) => {
+export const addUser = (user) => {
   return {
     type: ActionTypes.ADD_NEW_USER,
     payload: user
   }
 }
-
-export const addExistingUser = (user) => {
-    return {
-      type: ActionTypes.ADD_EXISTING_USER,
-      payload: user
-    }
-  }
 
 export const addNewUserFirebase = (user) =>  async (dispatch) => {
     await firebase
@@ -23,14 +16,11 @@ export const addNewUserFirebase = (user) =>  async (dispatch) => {
         .doc(user.uid)
         .set(user);
     
-    dispatch(addNewUser(user));
+    dispatch(addUser(user));
 }
 
 export const addExistingUserFirebase = (user) =>  async (dispatch) => {
 
-    console.log(user);
-    
-    dispatch(addExistingUser(user));
     await firebase
         .firestore()
         .collection("users")
@@ -39,6 +29,7 @@ export const addExistingUserFirebase = (user) =>  async (dispatch) => {
             last_logged_in: Date.now()
         }, {merge: true})
 
+    dispatch(addUser(user));
     
 }
 
