@@ -2,6 +2,7 @@ import * as Google from 'expo-google-app-auth';
 import firebase from 'firebase';
 import * as ActionTypes from '../actionTypes';
 import * as Facebook from 'expo-facebook';
+import { addExistingUserFirebase, addNewUserFirebase } from './users';
 
 export const requestLogin = () => {
   return {
@@ -97,26 +98,20 @@ Facebooklogin = async (dispatch) => {
         dispatch(receiveLogin());
         console.log('user signed in  ----- ', User.additionalUserInfo.profile.picture.data.url);
         if (User.additionalUserInfo.isNewUser) {
-          firebase
-            .database()
-            .ref('/users/' + User.user.uid)
-            .set({
-              gmail: User.user.email,
-              profile_picture: User.additionalUserInfo.profile.picture.data.url,
-              first_name: User.additionalUserInfo.profile.first_name,
-              last_name: User.additionalUserInfo.profile.last_name,
-              created_at: Date.now()
-            })
-            .then(function (snapshot) {
-              // console.log('Snapshot', snapshot);
-            });
+          dispatch(addNewUserFirebase({
+            uid: User.user.uid,
+            email: User.user.email,
+            profile_picture: User.additionalUserInfo.profile.picture.data.url,
+            first_name: User.additionalUserInfo.profile.first_name,
+            last_name: User.additionalUserInfo.profile.last_name,
+            created_at: Date.now()
+          }));
+            
         } else {
-          firebase
-            .database()
-            .ref('/users/' + User.user.uid)
-            .update({
-              last_logged_in: Date.now()
-            });
+          dispatch(addExistingUserFirebase({
+            uid: User.user.uid,
+            last_logged_in: Date.now()
+          }));
         }
       })
       .catch((error) =>{
@@ -176,26 +171,19 @@ onSignInGoogle = (googleUser, dispatch) => {
             dispatch(receiveLogin());
             console.log('user signed in ');
             if (result.additionalUserInfo.isNewUser) {
-              firebase
-                .database()
-                .ref('/users/' + result.user.uid)
-                .set({
-                  gmail: result.user.email,
+              dispatch(addNewUserFirebase({
+                  uid: result.user.uid,
+                  email: result.user.email,
                   profile_picture: result.additionalUserInfo.profile.picture,
                   first_name: result.additionalUserInfo.profile.given_name,
                   last_name: result.additionalUserInfo.profile.family_name,
                   created_at: Date.now()
-                })
-                .then(function (snapshot) {
-                  // console.log('Snapshot', snapshot);
-                });
+                }));
             } else {
-              firebase
-                .database()
-                .ref('/users/' + result.user.uid)
-                .update({
-                  last_logged_in: Date.now()
-                });
+              dispatch(addExistingUserFirebase({
+                uid: result.user.uid,
+                last_logged_in: Date.now()
+                }, {merge: true}));
             }
           })
           .catch(function (error) {
