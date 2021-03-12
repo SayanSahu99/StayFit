@@ -1,7 +1,7 @@
 
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import styles from "../Register/style";
-import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Platform, KeyboardAvoidingView } from 'react-native';
+import { Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Platform, KeyboardAvoidingView } from 'react-native';
 import { Button, SocialIcon } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUserFacebook, loginUserGoogle, requestLogin } from '../../Redux/ActionCreaters/auth'
@@ -51,7 +51,7 @@ export default function SignIn({ navigation }) {
                     type='facebook'
                     button
                     title='Sign In With Facebook'
-                    onPress={() => { 
+                    onPress={() => {
                       dispatch(requestLogin());
                       dispatch(loginUserFacebook());
                     }}
@@ -70,7 +70,7 @@ export default function SignIn({ navigation }) {
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <View style={{alignSelf:"stretch"}}></View>
+        <View style={{ alignSelf: "stretch" }}></View>
       </KeyboardAvoidingView>
     </View>
   )
