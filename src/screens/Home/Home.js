@@ -4,23 +4,16 @@ import { ListItem, Text, BottomSheet } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 import styles from './style';
 import { useTheme } from '@react-navigation/native';
-import firebase from 'firebase';
+import { useSelector } from 'react-redux';
 
 export default function Home({ navigation }) {
   // TODO: add firebase sign-out and user info function later
   const { colors } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
-  const [username, setUsername] = useState('');
 
-
-
-  // Getting the usename from the database
-  useEffect(() => {
-    const userId = firebase.auth().currentUser.uid;
-    firebase.database().ref('/users/' + userId).once('value').then((snapshot)=>{
-      setUsername((snapshot.val() && snapshot.val().first_name) || 'Anonymous');
-    })
-  })
+  // Getting the usename from the state
+  const name = useSelector(state => state.user.first_name)
+  
 
 
   const bottomSheetList = [
@@ -91,7 +84,7 @@ export default function Home({ navigation }) {
         <View>
           <View>
             <View style={styles.TextView}>
-              <Text h1 style={styles.greetingText}>Hello {username}</Text>
+              <Text h1 style={styles.greetingText}>Hello {name}</Text>
               <Text h4>Eat the right amount of food and stay hydrated throughout the day</Text>
             </View>
           </View>
