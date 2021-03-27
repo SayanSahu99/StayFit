@@ -6,6 +6,8 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import RNPickerSelect from 'react-native-picker-select';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useSelector, useDispatch } from 'react-redux';
+import { addHealthFirebase } from '../../Redux/ActionCreaters/health';
 
 const validationSchema = yup.object().shape({
     name: yup
@@ -48,7 +50,7 @@ const validationSchema = yup.object().shape({
 const FieldWrapper = ({ children, label, formikProps, formikKey }) => (
     <View>
         {children}
-        <Text style={{ color: 'red', marginLeft:10, fontSize:12 }}>
+        <Text style={{ color: 'red', marginLeft: 10, fontSize: 12 }}>
             {formikProps.touched[formikKey] && formikProps.errors[formikKey]}
         </Text>
     </View>
@@ -82,6 +84,15 @@ export const DetailsForm = props => {
     const [gender, setGender] = useState('Select Gender ...');
     const [activity, setActivity] = useState('Select Activity ...');
     const [medical, setMedical] = useState('Select Medical Condition ...');
+    const dispatch = useDispatch();
+    const age = useSelector(state => state.health.age);
+    const reduxGender = useSelector(state => state.health.gender);
+    const height = useSelector(state => state.health.current_height);
+    const weight = useSelector(state => state.health.current_weight);
+    const reduxActivity = useSelector(state => state.health.activity);
+    const reduxMedical = useSelector(state => state.health.medical);
+    const name = useSelector(state => state.user.first_name);
+    const uid = useSelector(state => state.user.uid);
 
     const selectGender = (value, formikProps) => {
         setGender(value)
@@ -99,167 +110,193 @@ export const DetailsForm = props => {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.formStyles}>
-                <Formik
+        <View>
+            <ScrollView>
+                <View style={styles.formStyles}>
+                    <Formik
 
-                    initialValues={{
-                        name: '',
-                        gender: '',
-                        height: 0,
-                        weight: 0,
-                        age: 0,
-                        medical: '',
-                        activity: ''
-                    }}
-                    onSubmit={values => {
-                        // alert(JSON.stringify(values));
-                        props.navigation.push("Target");
-                        console.log(values)
-                    }}
-                    validationSchema={validationSchema}
-                >
-                    {formikProps => (
-                        <View>
-                            <StyledInput
-                                label="Name"
-                                formikProps={formikProps}
-                                formikKey="name"
-                                placeholder="Name"
-                                leftIcon={{ type: 'font-awesome', name: 'user' }}
-                                autoFocus
-                            />
-                            <StyledInput
-                                label="Age"
-                                formikProps={formikProps}
-                                formikKey="age"
-                                placeholder="Age"
-                                leftIcon={<Icon
-                                    name='birthday-cake'
-                                    size={24}
-                                    color='black'
-                                />}
-                            />
-                            <FieldWrapper label={'Gender'} formikKey={'gender'} formikProps={formikProps}>
-                                <View style={styles.pickerContainer}>
-                                    <View style={styles.pickerIcon}>
-                                        <Icon
-                                            name='venus-mars'
-                                            size={24}
-                                            color='black'
-                                        />
-                                    </View>
-                                    <View style={{ flex: 7 }}>
-                                        <RNPickerSelect
-                                            key={gender}
-                                            onValueChange={value => selectGender(value, formikProps)}
-                                            placeholder={{
-                                                label: "Select Gender ...",
-                                                value: null
-                                            }}
-                                            items={[
-                                                { label: 'Male', value: 'male' },
-                                                { label: 'Female', value: 'female' },
-                                            ]}
-                                            value={gender}
-                                            style={styles.inputIOS}
-                                        />
-                                    </View>
-                                </View>
-                            </FieldWrapper>
-                            <StyledInput
-                                label="height"
-                                formikProps={formikProps}
-                                formikKey="height"
-                                placeholder="Enter height in metres"
-                                leftIcon={<Icon
-                                    name='ruler-vertical'
-                                    size={24}
-                                    color='black'
-                                />}
-                            />
-                            <StyledInput
-                                label="weight"
-                                formikProps={formikProps}
-                                formikKey="weight"
-                                placeholder="Enter weight in Kg"
-                                leftIcon={
-                                    <Icon
-                                        name='weight'
-                                        size={24}
-                                        color='black'
-                                    />}
-                            />
-                            <FieldWrapper label={'Activity'} formikKey={'activity'} formikProps={formikProps}>
-                                <View style={{ ...styles.pickerContainer, marginBottom: 10 }}>
-                                    <View style={styles.pickerIcon}>
-                                        <Icon
-                                            name='running'
-                                            size={24}
-                                            color='black'
-                                        />
-                                    </View>
-                                    <View style={{ flex: 7 }}>
-                                        <RNPickerSelect
-                                            key={activity}
-                                            onValueChange={value => selectActivity(value, formikProps)}
-                                            placeholder={{
-                                                label: "Select Activity ...",
-                                                value: null
-                                            }}
-                                            items={[
-                                                { label: 'Sedentary', value: 'sedenatry' },
-                                                { label: 'Lightly Active', value: 'light' },
-                                                { label: 'Moderately Active', value: 'moderate' },
-                                                { label: 'Very Active', value: 'high' },
-                                            ]}
-                                            value={activity}
-                                            style={styles.inputIOS}
-                                        />
-                                    </View>
-                                </View>
-                            </FieldWrapper>
-                            <FieldWrapper label={'medical condition'} formikKey={'medical'} formikProps={formikProps}>
-                                <View style={{ ...styles.pickerContainer, marginBottom: 10 }}>
-                                    <View style={styles.pickerIcon}>
-                                        <Icon
-                                            name='stethoscope'
-                                            size={24}
-                                            color='black'
-                                        />
-                                    </View>
-                                    <View style={{ flex: 7 }}>
-                                        <RNPickerSelect
-                                            key={medical}
-                                            onValueChange={value => selectMedical(value, formikProps)}
-                                            placeholder={{
-                                                label: "Select Medical Condition ...",
-                                                value: null
-                                            }}
-                                            items={[
-                                                { label: 'None', value: 'None' },
-                                                { label: 'Diabetes', value: 'diabetes' },
-                                                { label: 'Thyroid', value: 'thyroid' },
-                                                { label: 'PCOS', value: 'PCOS' },
-                                                { label: 'cholestrol', value: 'cholestrol' },
-                                                { label: 'Physical Injury', value: 'physical' },
-                                                { label: 'Hypertension', value: 'hypertension' },
-                                            ]}
-                                            value={medical}
-                                            style={styles.inputIOS}
-                                        />
-                                    </View>
-                                </View>
-                            </FieldWrapper>
+                        initialValues={{
+                            name: name,
+                            gender: reduxGender,
+                            height: height,
+                            weight: weight,
+                            age: age,
+                            medical: reduxMedical,
+                            activity: reduxActivity
+                        }}
+                        onSubmit={values => {
+                            // alert(JSON.stringify(values));
+                            dispatch(addHealthFirebase(values, uid));
+                            props.navigation.navigate("Target");
+                            console.log(values)
+                        }}
+                        validationSchema={validationSchema}
+                    >
+                        {formikProps => (
                             <View>
+                                <View style={styles.border}>
+                                    <View style={styles.labelText}><Text style={{ fontSize: 20 }}>Name</Text></View>
+                                    <StyledInput
+                                        label="Name"
+                                        formikProps={formikProps}
+                                        formikKey="name"
+                                        placeholder={name}
+                                        leftIcon={{ type: 'font-awesome', name: 'user' }}
+                                        autoFocus
+                                    />
+                                </View>
+                                <View style={styles.border}>
+                                    <View style={styles.labelText}><Text style={{ fontSize: 20 }}>Age</Text></View>
+                                    <StyledInput
+                                        label="Age"
+                                        formikProps={formikProps}
+                                        formikKey="age"
+                                        placeholder={age.toString()}
+                                        leftIcon={
+                                            <Icon
+                                                name='birthday-cake'
+                                                size={24}
+                                                color='black'
+                                            />
+                                        }
+                                    />
+                                </View>
+                                <View style={styles.border}>
+                                    <View style={styles.labelText}><Text style={{ fontSize: 20 }}>Gender</Text></View>
+                                    <FieldWrapper label={'Gender'} formikKey={'gender'} formikProps={formikProps}>
+                                        <View style={styles.pickerContainer}>
+                                            <View style={styles.pickerIcon}>
+                                                <Icon
+                                                    name='venus-mars'
+                                                    size={24}
+                                                    color='black'
+                                                />
+                                            </View>
+                                            <View style={{ flex: 7 }}>
+                                                <RNPickerSelect
+                                                    key={gender}
+                                                    onValueChange={value => selectGender(value, formikProps)}
+                                                    placeholder={{
+                                                        label: `${reduxGender}`,
+                                                        value: null
+                                                    }}
+                                                    items={[
+                                                        { label: 'Male', value: 'male' },
+                                                        { label: 'Female', value: 'female' },
+                                                    ]}
+                                                    value={gender}
+                                                    style={styles.inputIOS}
+                                                />
+                                            </View>
+                                        </View>
+                                    </FieldWrapper>
+                                </View>
+                                <View style={styles.border}>
+                                    <View style={styles.labelText}><Text style={{ fontSize: 20 }}>Height (m)</Text></View>
+                                    <StyledInput
+                                        label="height"
+                                        formikProps={formikProps}
+                                        formikKey="height"
+                                        placeholder={height.toString()}
+                                        leftIcon={<Icon
+                                            name='ruler-vertical'
+                                            size={24}
+                                            color='black'
+                                        />}
+                                    />
+                                </View>
+                                <View style={styles.border}>
+                                    <View style={styles.labelText}><Text style={{ fontSize: 20 }}>Weight (kg)</Text></View>
+                                    <StyledInput
+                                        label="weight"
+                                        formikProps={formikProps}
+                                        formikKey="weight"
+                                        placeholder={weight.toString()}
+                                        leftIcon={
+                                            <Icon
+                                                name='weight'
+                                                size={24}
+                                                color='black'
+                                            />}
+                                    />
+                                </View>
+                                <View style={styles.border}>
+                                    <View style={styles.labelText}><Text style={{ fontSize: 20 }}>Activity</Text></View>
+                                    <FieldWrapper label={'Activity'} formikKey={'activity'} formikProps={formikProps}>
+                                        <View style={{ ...styles.pickerContainer, marginBottom: 10 }}>
+                                            <View style={styles.pickerIcon}>
+                                                <Icon
+                                                    name='running'
+                                                    size={24}
+                                                    color='black'
+                                                />
+                                            </View>
+                                            <View style={{ flex: 7 }}>
+                                                <RNPickerSelect
+                                                    key={activity}
+                                                    onValueChange={value => selectActivity(value, formikProps)}
+                                                    placeholder={{
+                                                        label: `${reduxActivity}`,
+                                                        value: null
+                                                    }}
+                                                    items={[
+                                                        { label: 'Sedentary', value: 'sedenatry' },
+                                                        { label: 'Lightly Active', value: 'light' },
+                                                        { label: 'Moderately Active', value: 'moderate' },
+                                                        { label: 'Very Active', value: 'high' },
+                                                    ]}
+                                                    value={activity}
+                                                    style={styles.inputIOS}
+                                                />
+                                            </View>
+                                        </View>
+                                    </FieldWrapper>
+                                </View>
+                                <View style={styles.border}>
+                                    <View style={styles.labelText}><Text style={{ fontSize: 20 }}>Medical Condition</Text></View>
+                                    <FieldWrapper label={'medical condition'} formikKey={'medical'} formikProps={formikProps}>
+                                        <View style={{ ...styles.pickerContainer, marginBottom: 10 }}>
+                                            <View style={styles.pickerIcon}>
+                                                <Icon
+                                                    name='stethoscope'
+                                                    size={24}
+                                                    color='black'
+                                                />
+                                            </View>
+                                            <View style={{ flex: 7 }}>
+                                                <RNPickerSelect
+                                                    key={medical}
+                                                    onValueChange={value => selectMedical(value, formikProps)}
+                                                    placeholder={{
+                                                        label: `${reduxMedical}`,
+                                                        value: null
+                                                    }}
+                                                    items={[
+                                                        { label: 'None', value: 'None' },
+                                                        { label: 'Diabetes', value: 'diabetes' },
+                                                        { label: 'Thyroid', value: 'thyroid' },
+                                                        { label: 'PCOS', value: 'PCOS' },
+                                                        { label: 'cholestrol', value: 'cholestrol' },
+                                                        { label: 'Physical Injury', value: 'physical' },
+                                                        { label: 'Hypertension', value: 'hypertension' },
+                                                    ]}
+                                                    value={medical}
+                                                    style={styles.inputIOS}
+                                                />
+                                            </View>
+                                        </View>
+                                    </FieldWrapper>
+                                </View>
                                 <Button onPress={formikProps.handleSubmit} title="Submit" />
-                            </View>
-                        </View>
-                    )}
 
-                </Formik>
-            </View>
-        </ScrollView>
+                            </View>
+                        )}
+
+                    </Formik>
+                </View>
+            </ScrollView>
+
+        </View>
     );
 }
 
@@ -290,5 +327,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'center',
         alignItems: 'center'
+    },
+    border: {
+        borderWidth: 0.5,
+        marginVertical: 5
+    },
+    labelText: {
+        marginLeft: 10,
+        marginTop: 10
     }
 });
