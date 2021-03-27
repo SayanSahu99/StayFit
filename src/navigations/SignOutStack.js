@@ -22,7 +22,7 @@ export default function SignOutStack(props) {
 
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen 
+      <Stack.Screen 
         name="DetailsForm" 
         component={DetailsForm} 
         options={{
@@ -36,7 +36,7 @@ export default function SignOutStack(props) {
           fontWeight: 'bold',
           },
       }}
-      /> */}
+      />
       <Stack.Screen
         name="Target"
         component={Target}
